@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yian.huigou.mapper.SystemParamMapper">
+    <resultMap id="BaseResultMap" type="com.yian.huigou.pojo.SystemParam">
+        <id property="paramId" column="systemparam_id" jdbcType="INTEGER"></id>
+        <result property="paramName" column="systemparam_name" jdbcType="INTEGER"></result>
+        <result property="paramValue" column="systemparam_value" jdbcType="INTEGER"></result>
+    </resultMap>
+    <select id="selectSystemParamValueByName" parameterType="string" resultType="string">
+        select systemparam_value from tb_systemparam where systemparam_name = #{paramName}
+    </select>
+</mapper>

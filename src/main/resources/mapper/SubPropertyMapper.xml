@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yian.huigou.mapper.SubPropertyMapper">
+
+    <resultMap id="BaseResultMap" type="com.yian.huigou.pojo.SubProperty">
+        <id property="subPropertyId" column="info_detail_id" jdbcType="INTEGER"></id>
+        <result property="subPropertyName" column="info_detail_name" jdbcType="VARCHAR"></result>
+        <result property="subPropertyDesc" column="info_detail_desc" jdbcType="VARCHAR"></result>
+        <association property="property" javaType="com.yian.huigou.pojo.ParProperty">
+            <id property="parPropertyId" column="basic_info_id" jdbcType="INTEGER"></id>
+            <result property="parPropertyName" column="basic_info_name" jdbcType="VARCHAR"></result>
+        </association>
+    </resultMap>
+
+
+    <select id="selectSubPropertyByGoodId" parameterType="int" resultMap="BaseResultMap">
+        SELECT temp.*, tbi.*
+        from (select tid.*
+              FROM tb_info_detail tid
+              where tid.info_detail_id in
+                    (SELECT gd.fk_info_detail_id from tb_good_detail gd where gd.fk_good_id = #{goodId})) temp
+                 left join tb_basic_info tbi on (tbi.basic_info_id = temp.fk_basic_info_id)
+    </select>
+
+    <select id="selectGoodDiscountPrice" parameterType="arraylist" resultType="int">
+        select SUM(good_discount )from tb_good_detail where gd_id 
+        <foreach collection="array" open="in(" close=")" separator="," index="id">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

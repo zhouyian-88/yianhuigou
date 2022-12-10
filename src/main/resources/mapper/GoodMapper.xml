@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yian.huigou.mapper.GoodMapper">
+
+    <resultMap id="BaseResultMap" type="com.yian.huigou.pojo.Good">
+            <id property="goodId" column="good_id" jdbcType="INTEGER"/>
+            <result property="goodName" column="good_name" jdbcType="VARCHAR"/>
+            <result property="goodImg" column="good_img" jdbcType="VARCHAR"/>
+            <result property="goodCost" column="good_cost" jdbcType="INTEGER"/>
+            <result property="goodMinPrice" column="good_min_price" jdbcType="INTEGER"/>
+            <result property="goodFirstPrice" column="good_first_price" jdbcType="INTEGER"/>
+            <result property="goodSecondPrice" column="good_second_price" jdbcType="INTEGER"/>
+            <result property="goodThirdPrice" column="good_third_price" jdbcType="INTEGER"/>
+            <result property="goodForthPrice" column="good_forth_price" jdbcType="INTEGER"/>
+            <result property="goodFifthPrice" column="good_fifth_price" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        good_id,good_name,good_img,
+        good_cost,good_min_price,good_first_price,
+        good_second_price,good_third_price,good_forth_price,
+        good_fifth_price
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_good
+        where  good_id = #{goodId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tb_good
+        where  good_id = #{goodId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="good_id" keyProperty="goodId" parameterType="com.yian.huigou.pojo.Good" useGeneratedKeys="true">
+        insert into tb_good
+        ( good_id,good_name,good_img
+        ,good_cost,good_min_price,good_first_price
+        ,good_second_price,good_third_price,good_forth_price
+        ,good_fifth_price)
+        values (#{goodId,jdbcType=INTEGER},#{goodName,jdbcType=VARCHAR},#{goodImg,jdbcType=VARCHAR}
+        ,#{goodCost,jdbcType=INTEGER},#{goodMinPrice,jdbcType=INTEGER},#{goodFirstPrice,jdbcType=INTEGER}
+        ,#{goodSecondPrice,jdbcType=INTEGER},#{goodThirdPrice,jdbcType=INTEGER},#{goodForthPrice,jdbcType=INTEGER}
+        ,#{goodFifthPrice,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="good_id" keyProperty="goodId" parameterType="com.yian.huigou.pojo.Good" useGeneratedKeys="true">
+        insert into tb_good
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="goodId != null">good_id,</if>
+                <if test="goodName != null">good_name,</if>
+                <if test="goodImg != null">good_img,</if>
+                <if test="goodCost != null">good_cost,</if>
+                <if test="goodMinPrice != null">good_min_price,</if>
+                <if test="goodFirstPrice != null">good_first_price,</if>
+                <if test="goodSecondPrice != null">good_second_price,</if>
+                <if test="goodThirdPrice != null">good_third_price,</if>
+                <if test="goodForthPrice != null">good_forth_price,</if>
+                <if test="goodFifthPrice != null">good_fifth_price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="goodId != null">#{goodId,jdbcType=INTEGER},</if>
+                <if test="goodName != null">#{goodName,jdbcType=VARCHAR},</if>
+                <if test="goodImg != null">#{goodImg,jdbcType=VARCHAR},</if>
+                <if test="goodCost != null">#{goodCost,jdbcType=INTEGER},</if>
+                <if test="goodMinPrice != null">#{goodMinPrice,jdbcType=INTEGER},</if>
+                <if test="goodFirstPrice != null">#{goodFirstPrice,jdbcType=INTEGER},</if>
+                <if test="goodSecondPrice != null">#{goodSecondPrice,jdbcType=INTEGER},</if>
+                <if test="goodThirdPrice != null">#{goodThirdPrice,jdbcType=INTEGER},</if>
+                <if test="goodForthPrice != null">#{goodForthPrice,jdbcType=INTEGER},</if>
+                <if test="goodFifthPrice != null">#{goodFifthPrice,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yian.huigou.pojo.Good">
+        update tb_good
+        <set>
+                <if test="goodName != null">
+                    good_name = #{goodName,jdbcType=VARCHAR},
+                </if>
+                <if test="goodImg != null">
+                    good_img = #{goodImg,jdbcType=VARCHAR},
+                </if>
+                <if test="goodCost != null">
+                    good_cost = #{goodCost,jdbcType=INTEGER},
+                </if>
+                <if test="goodMinPrice != null">
+                    good_min_price = #{goodMinPrice,jdbcType=INTEGER},
+                </if>
+                <if test="goodFirstPrice != null">
+                    good_first_price = #{goodFirstPrice,jdbcType=INTEGER},
+                </if>
+                <if test="goodSecondPrice != null">
+                    good_second_price = #{goodSecondPrice,jdbcType=INTEGER},
+                </if>
+                <if test="goodThirdPrice != null">
+                    good_third_price = #{goodThirdPrice,jdbcType=INTEGER},
+                </if>
+                <if test="goodForthPrice != null">
+                    good_forth_price = #{goodForthPrice,jdbcType=INTEGER},
+                </if>
+                <if test="goodFifthPrice != null">
+                    good_fifth_price = #{goodFifthPrice,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   good_id = #{goodId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yian.huigou.pojo.Good">
+        update tb_good
+        set 
+            good_name =  #{goodName,jdbcType=VARCHAR},
+            good_img =  #{goodImg,jdbcType=VARCHAR},
+            good_cost =  #{goodCost,jdbcType=INTEGER},
+            good_min_price =  #{goodMinPrice,jdbcType=INTEGER},
+            good_first_price =  #{goodFirstPrice,jdbcType=INTEGER},
+            good_second_price =  #{goodSecondPrice,jdbcType=INTEGER},
+            good_third_price =  #{goodThirdPrice,jdbcType=INTEGER},
+            good_forth_price =  #{goodForthPrice,jdbcType=INTEGER},
+            good_fifth_price =  #{goodFifthPrice,jdbcType=INTEGER}
+        where   good_id = #{goodId,jdbcType=INTEGER} 
+    </update>
+
+    <select id="selectGoodByCategoryIdOrBrandId" parameterType="int" resultMap="BaseResultMap">
+        select g.* from tb_good g where g.good_id in (
+            select bg.fk_good_id from tb_brand_good bg where bg.fk_brand_id in (
+                <if test="categoryId != -1">
+                    select cb.fk_brand_id from tb_category_brand cb where cb.fk_category_id = #{categoryId}
+                </if>
+                <if test="brandId != -1">
+                    #{brandId}
+                </if>
+            )
+        )
+    </select>
+
+    <select id="getGoodByGoodId" parameterType="int" resultMap="BaseResultMap">
+        select * from tb_good where good_id = #{id}
+    </select>
+</mapper>

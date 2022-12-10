@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yian.huigou.mapper.BrandMapper">
+  <resultMap id="BaseResultMap" type="com.yian.huigou.pojo.Brand">
+    <id column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    brand_id, brand_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="brand_id" keyProperty="brandId" parameterType="com.yian.huigou.pojo.Brand" useGeneratedKeys="true">
+    insert into tb_brand (brand_name)
+    values (#{brandName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="brand_id" keyProperty="brandId" parameterType="com.yian.huigou.pojo.Brand" useGeneratedKeys="true">
+    insert into tb_brand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="brandName != null">
+        brand_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="brandName != null">
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yian.huigou.pojo.Brand">
+    update tb_brand
+    <set>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yian.huigou.pojo.Brand">
+    update tb_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBrandListByCategoryId" parameterType="int" resultMap="BaseResultMap">
+    select b.* from tb_category_brand c left join tb_brand b on(c.fk_brand_id=b.brand_id) where c.fk_category_id = #{categoryId}
+  </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yian.huigou.mapper.CartMapper">
+    <resultMap id="BaseResultMap" type="com.yian.huigou.pojo.Cart">
+        <id property="cartId" column="cart_id" jdbcType="INTEGER"></id>
+        <result property="userId" column="fk_cart_user_id" jdbcType="INTEGER"></result>
+        <result property="goodId" column="fk_cart_good_id" jdbcType="INTEGER"></result>
+        <result property="cartPrice" column="cart_good_price" jdbcType="INTEGER"></result>
+        <association property="good" javaType="com.yian.huigou.pojo.Good">
+            <id property="goodId" column="good_id" jdbcType="INTEGER"/>
+            <result property="goodName" column="good_name" jdbcType="VARCHAR"/>
+            <result property="goodImg" column="good_img" jdbcType="VARCHAR"/>
+            <result property="goodCost" column="good_cost" jdbcType="INTEGER"/>
+            <result property="goodMinPrice" column="good_min_price" jdbcType="INTEGER"/>
+            <result property="goodFirstPrice" column="good_first_price" jdbcType="INTEGER"/>
+            <result property="goodSecondPrice" column="good_second_price" jdbcType="INTEGER"/>
+            <result property="goodThirdPrice" column="good_third_price" jdbcType="INTEGER"/>
+            <result property="goodForthPrice" column="good_forth_price" jdbcType="INTEGER"/>
+            <result property="goodFifthPrice" column="good_fifth_price" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <sql id="BaseSql">
+        cart_id,fk_cart_user_id,fk_cart_good_id,cart_good_price
+    </sql>
+    <select id="selectCartByUserId" parameterType="com.yian.huigou.pojo.Cart" resultMap="BaseResultMap">
+        select c.*,g.*  from tb_cart c left join tb_good g on (g.good_id = c.fk_cart_good_id) where fk_cart_user_id = #{userId}
+    </select>
+
+    <insert id="addTocard" parameterType="com.yian.huigou.pojo.Cart">
+        insert into tb_cart (<include refid="BaseSql"></include>) values (#{cartId},#{userId},#{good.goodId},#{cartPrice})
+    </insert>
+
+    <delete id="deleteByCardId">
+        DELETE from tb_cart where cart_id = #{cardId}
+    </delete>
+</mapper>
